@@ -21,12 +21,9 @@ pipeline {
             }
         }
         stage('Test') {
-            agent{
-                agent any
-                reuseNode true
-            }
             steps {
                 sh '''
+                    echo "Test stage".
                     test build/index.html
                     npm test
                 '''    
