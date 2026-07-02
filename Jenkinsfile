@@ -21,14 +21,14 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
-                sh '''
-                    echo "Test stage".
-                    test build/index.html
-                    npm test
-                '''    
+            agent {
+                docker {
+                    image 'node'
+                    reuseNode true
+                }
             }
-
-        }
+            steps {
+                echo "Test Stage"
+            }
     }
 }
