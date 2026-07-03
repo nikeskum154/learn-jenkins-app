@@ -23,38 +23,43 @@ pipeline {
             
         }
         */
-        stage('Test') {
-            agent {
-                docker {
-                    image 'node'
-                    reuseNode true
+        stage(Tests) {
+            parallel {
+                stage('Test') {
+                    agent {
+                        docker {
+                            image 'node'
+                            reuseNode true
+                        }
+                    }
+                    steps {
+                        echo "Test Stage"
+                        sh '''
+                            # test -f build/index.html
+                            npm test
+                        '''    
+                    }
                 }
-            }
-            steps {
-                echo "Test Stage"
-                sh '''
-                    # test -f build/index.html
-                    npm test
-                '''    
-            }
-        }
 
-        stage('E2E') {
-            agent {
-                docker {
-                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
-                    reuseNode true
+                stage('E2E') {
+                    agent {
+                        docker {
+                            image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+                            reuseNode true
+                        }
+                    }
+                    steps {
+                        echo "E2E Stage"
+                        sh '''
+                            npm install serve
+                            node_modules/.bin/serve -s build &
+                            npx playwright test --reporter=html
+                        '''    
+                    }
                 }
-            }
-            steps {
-                echo "E2E Stage"
-                sh '''
-                    npm install serve
-                    node_modules/.bin/serve -s build &
-                    npx playwright test --reporter=html
-                '''    
-            }
-        }
+            }    
+        }        
+        
     }
 
     post {
