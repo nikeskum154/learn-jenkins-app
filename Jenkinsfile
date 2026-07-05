@@ -80,7 +80,7 @@ pipeline {
                 }
             }
             steps {
-                echo "Deploy Stage"
+                echo "Staging Deploy Stage"
                 sh '''
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
@@ -98,7 +98,7 @@ pipeline {
                 }
             }
             steps {
-                echo "Deploy Stage"
+                echo "Prod Deploy Stage"
                 sh '''
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
