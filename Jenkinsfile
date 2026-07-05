@@ -6,7 +6,7 @@ pipeline {
     }
 
     stages {
-        /*
+        echo "Build Stage"
         stage('Build') {
             agent {
                 docker {
@@ -25,7 +25,7 @@ pipeline {
                 '''    
             }    
         }
-        */
+        
         stage(Tests) {
             parallel {
                 stage('Test') {
@@ -57,7 +57,7 @@ pipeline {
                         }
                     }
                     steps {
-                        echo "E2E Stage"
+                        echo "E2E Test Stage"
                         sh '''
                             npm install serve
                             node_modules/.bin/serve -s build &
@@ -80,6 +80,7 @@ pipeline {
                 }
             }
             steps {
+                echo "Deploy Stage"
                 sh '''
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
