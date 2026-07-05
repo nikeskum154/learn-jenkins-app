@@ -95,10 +95,10 @@ pipeline {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
                     reuseNode true
-                }
-                environment {
+                }      
+            }
+            environment {
                     CI_ENVIRONMENT_URL = "https://jocular-caramel-84488e.netlify.app/"
-                }
             }
             steps {
                 echo "Prod E2E Test Stage Post Deployment"
