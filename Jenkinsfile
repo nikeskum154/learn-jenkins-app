@@ -6,7 +6,6 @@ pipeline {
     }
 
     stages {
-        echo "Build Stage"
         stage('Build') {
             agent {
                 docker {
@@ -15,6 +14,7 @@ pipeline {
                 }
             }
             steps {
+                echo "Build Stage"
                 sh '''
                     ls -la
                     node --version
